@@ -11,48 +11,42 @@ namespace QueueTest
 	{
 		private Queue<T> _queueInternal;
 
-		private ReaderWriterLockSlim _rwSlim;
-		private ManualResetEventSlim _mreSlim;
+		private object _lockObject;
 
 		public TestQueue()
 		{
 			_queueInternal = new Queue<T>();
-			_rwSlim = new ReaderWriterLockSlim();
-			_mreSlim = new ManualResetEventSlim(false);
+			_lockObject = new object();
 		}
 
 		public void Push(T element)
 		{
-			try
+			lock (_lockObject)
 			{
-				_rwSlim.EnterWriteLock();
 				_queueInternal.Enqueue(element);
-				_mreSlim.Set();
-			}
-			finally
-			{
-				_rwSlim.ExitWriteLock();
 			}
 		}
+
 
 		public T Pop()
 		{
-			try
+			T element = default(T);
+			bool hasItems = false;
+			while (!hasItems)
 			{
-				_mreSlim.Wait();
-				_rwSlim.EnterReadLock();
-				var element = _queueInternal.Dequeue();
-				var count = _queueInternal.Count;
-				if (count == 0)
-					_mreSlim.Reset();
-				return element;
+				lock (_lockObject)
+				{
+					var count = _queueInternal.Count;
+					hasItems = count != 0;
+					if (!hasItems)
+						continue;
+					element = _queueInternal.Dequeue();
+					return element;
+				}
 			}
-			finally
-			{
-
-				_rwSlim.ExitReadLock();
-			}
+			return element;
 		}
-
 	}
 }
+
+

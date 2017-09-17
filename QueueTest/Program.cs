@@ -17,15 +17,16 @@ namespace QueueTest
 			Thread popThread = new Thread(() => PopFromQueue(q));
 			Thread popThread1 = new Thread(() => PopFromQueue(q));
 			Thread popThread2 = new Thread(() => PopFromQueue(q));
-			popThread2.Start();
+
+
 			popThread.Start();
 			popThread1.Start();
+
 			PushToQueue(q, 8);
 			Thread pushThread = new Thread(() => PushToQueue(q, 12));
 			PushToQueue(q, 13);
-
 			pushThread.Start();
-
+			popThread2.Start();
 			Console.ReadLine();
 		}
 

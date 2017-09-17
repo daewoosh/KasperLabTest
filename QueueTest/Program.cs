@@ -12,33 +12,33 @@ namespace QueueTest
 		static void Main()
 		{
 			var q = new TestQueue<int>();
-			List<int> poped = new List<int>();
 
-			Thread popThread = new Thread(() => poped.Add(q.Pop()));
-			Thread popThread1 = new Thread(() => poped.Add(q.Pop()));
-			Thread popThread2 = new Thread(() => poped.Add(q.Pop()));
 
-			q.Push(8);
-
-			
-			
-
-			Thread pushThread = new Thread(() => q.Push(12));
-
-			q.Push(13);
+			Thread popThread = new Thread(() => PopFromQueue(q));
+			Thread popThread1 = new Thread(() => PopFromQueue(q));
+			Thread popThread2 = new Thread(() => PopFromQueue(q));
 			popThread2.Start();
 			popThread.Start();
 			popThread1.Start();
-			
+			PushToQueue(q, 8);
+			Thread pushThread = new Thread(() => PushToQueue(q, 12));
+			PushToQueue(q, 13);
 
 			pushThread.Start();
-			Thread.Sleep(1000);
-			foreach (var item in poped)
-			{
-				Console.WriteLine(item);
-			}
-			
+
 			Console.ReadLine();
+		}
+
+		private static void PopFromQueue<T>(ITestQueue<T> queue)
+		{
+			var value = queue.Pop();
+			Console.WriteLine($"Pop element from thread with ID {Thread.CurrentThread.ManagedThreadId} with value = {value}");
+		}
+
+		private static void PushToQueue<T>(ITestQueue<T> queue, T value)
+		{
+			queue.Push(value);
+			Console.WriteLine($"Push element from thread with ID {Thread.CurrentThread.ManagedThreadId} with value = {value}");
 		}
 
 

@@ -7,48 +7,50 @@ using System.Threading.Tasks;
 
 namespace QueueTest
 {
-	public interface ITestQueue<T>
-	{
-		void Push(T element);
-
-		T Pop();
-	}
-
-
 	public class TestQueue<T> : ITestQueue<T>
 	{
 		private Queue<T> _queueInternal;
 
-		private volatile bool _hasElement;
-
-		private object _lockForRead = new object();
-		private object _lockForWrite = new object();
+		private ReaderWriterLockSlim _rwSlim;
+		private ManualResetEventSlim _mreSlim;
 
 		public TestQueue()
 		{
 			_queueInternal = new Queue<T>();
-			_hasElement = false;
+			_rwSlim = new ReaderWriterLockSlim();
+			_mreSlim = new ManualResetEventSlim(false);
 		}
 
 		public void Push(T element)
 		{
-			lock (_lockForWrite)
+			try
 			{
+				_rwSlim.EnterWriteLock();
 				_queueInternal.Enqueue(element);
-				_hasElement = true;
+				_mreSlim.Set();
 			}
-
+			finally
+			{
+				_rwSlim.ExitWriteLock();
+			}
 		}
 
 		public T Pop()
 		{
-			lock (_lockForRead)
+			try
 			{
-				while (!_hasElement)
-				{ }
-				var res = _queueInternal.Dequeue();
-				_hasElement = _queueInternal.Count > 0;
-				return res;
+				_mreSlim.Wait();
+				_rwSlim.EnterReadLock();
+				var element = _queueInternal.Dequeue();
+				var count = _queueInternal.Count;
+				if (count == 0)
+					_mreSlim.Reset();
+				return element;
+			}
+			finally
+			{
+
+				_rwSlim.ExitReadLock();
 			}
 		}
 

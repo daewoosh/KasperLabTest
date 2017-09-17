@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueTest", "QueueTest\QueueTest.csproj", "{404FC263-438D-4A24-B6FB-9BBF387F7611}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NumbersFinder", "C:\Users\daewoosh\Documents\Visual Studio 2015\Projects\NumbersFinder\NumbersFinder\NumbersFinder.csproj", "{D368FD38-5E56-4E8B-B9BF-D01264DB2F9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NumbersFinder", "NumberFinder\NumbersFinder.csproj", "{47ECE1FD-BE84-40E4-A49F-A16EEF1FCAEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{404FC263-438D-4A24-B6FB-9BBF387F7611}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{404FC263-438D-4A24-B6FB-9BBF387F7611}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{404FC263-438D-4A24-B6FB-9BBF387F7611}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D368FD38-5E56-4E8B-B9BF-D01264DB2F9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D368FD38-5E56-4E8B-B9BF-D01264DB2F9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D368FD38-5E56-4E8B-B9BF-D01264DB2F9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D368FD38-5E56-4E8B-B9BF-D01264DB2F9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47ECE1FD-BE84-40E4-A49F-A16EEF1FCAEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47ECE1FD-BE84-40E4-A49F-A16EEF1FCAEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47ECE1FD-BE84-40E4-A49F-A16EEF1FCAEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47ECE1FD-BE84-40E4-A49F-A16EEF1FCAEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
